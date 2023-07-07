@@ -1,6 +1,8 @@
 ### MRZ READER ##
 
-This is an inference private repository to extract & read MRZ from passports 
+This is an inference private repository to extract & read MRZ from passports . I did this
+prototype as a part of assesment where the challenge was to recover MRZ are from passport
+by detecting angled brackets (<)
 
 ```
 pip3 install -r requirements.txt
@@ -13,5 +15,16 @@ python3 main.py
 
 #### SOLUTION ####
 
+The solution involves both classic Computer Vision approach & Deep Learning approach. 
 
-![alt text](https://github.com/vk1996/MRZ_Extract_And_Reader/blob/main/proposed_solution.png?raw=true)
+Orderwise as in image below, the pipeline starts with document detection by YOLO model.
+Followed by deskewing image using hough transform.
+
+From the deskewed image, the angled brackets (<) are detected from which the MRZ area 
+is recovered by computing the distance & location of angled brackets & MRZ standards.
+
+The recovered MRZ area is passed to OTSU thresholding & upper half / lower half of MRZ 
+is cropped & sent to Convolutional OCR model
+
+
+![alt text](https://github.com/vk1996/MRZ_Extract_And_Reader/blob/main/output.jpg?raw=true)
