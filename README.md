@@ -7,9 +7,9 @@ pip3 install -r requirements.txt
 python3 main.py
 
 ```
-#### RESULTS ####
+#### MRZ EXTRACTION & OCR ####
 
-![alt text](https://github.com/vk1996/MRZ_Extract_And_Reader/blob/main/output.jpg?raw=true)
+![alt text](https://github.com/vk1996/MRZ_Extract_And_Reader/blob/main/final_output.jpg?raw=true)
 
 #### SOLUTION ####
 
