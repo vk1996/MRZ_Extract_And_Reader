@@ -129,7 +129,7 @@ def skew_angle_hough_transform(image):
     accum, angles, dists = hough_line_peaks(h, theta, d)
     
     # round the angles to 2 decimal places and find the most common angle.
-    most_common_angle = mode(np.around(angles, decimals=2))[0]
+    most_common_angle = mode(np.around(angles, decimals=2),keepdims=False)[0]
     
     # convert the angle to degree for rotation.
     skew_angle = np.rad2deg(most_common_angle - np.pi/2)

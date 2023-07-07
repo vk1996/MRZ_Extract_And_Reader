@@ -1,5 +1,6 @@
-### MRZ RECOVERY CHALLENGE ##
-Install Jupyter, matplotlib and opencv-python, and open `mrz-lab.ipynb`.
+### MRZ READER ##
+
+This is an inference private repository to extract & read MRZ from passports 
 
 ```
 pip3 install -r requirements.txt
@@ -8,9 +9,9 @@ python3 main.py
 ```
 #### RESULTS ####
 
-![alt text](https://github.com/eddyfrank/scanbot-test-task-vignesh-kotteeswaran/blob/main/progress.png?raw=true)
+![alt text](https://github.com/vk1996/MRZ_Extract_And_Reader/blob/main/output.jpg?raw=true)
 
 #### SOLUTION ####
 
 
-![alt text](https://github.com/eddyfrank/scanbot-test-task-vignesh-kotteeswaran/blob/main/proposed_solution.png?raw=true)
+![alt text](https://github.com/vk1996/MRZ_Extract_And_Reader/blob/main/proposed_solution.png?raw=true)

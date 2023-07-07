@@ -1,5 +1,5 @@
 '''
-Copyright 2022 Vignesh(VK)Kotteeswaran <iamvk888@gmail.com>
+Copyright 2023 Vignesh(VK)Kotteeswaran <iamvk888@gmail.com>
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -14,12 +14,7 @@ limitations under the License.
 
 import cv2
 import numpy as np
-import tensorflow as tf
-print('[INFO]: is gpu available :',tf.test.is_gpu_available())
-from tensorflow.keras.models import load_model
-import tensorflow.keras.backend as K
-
-
+import onnxruntime as ort
 
 
 
@@ -44,7 +39,7 @@ class Detection:
         self.grid_w=grid[0]
         self.grid_h=grid[1]
 
-        self.__model = load_model(model_path)
+        self.__model = ort.InferenceSession(model_path, providers=["CPUExecutionProvider"])
 
         self.plot_boxes=False
         self.__bbox_color=(0,0,255)
@@ -54,9 +49,6 @@ class Detection:
             data=f.read()
         self.labels=[i for i in data.split('\n') if len(i)>0]
 
-        
-        if show_model_layer:
-            self.__model.summary()
 
         
 
@@ -79,8 +71,8 @@ class Detection:
         blob =np.expand_dims(np.array(blob /255.,dtype=np.float32),axis=0)
             
         
-        #predict the pre-processed input         
-        output_arr = self.__model.predict(blob)
+        #predict the pre-processed input   
+        output_arr =self.__model.run([self.__model.get_outputs()[0].name], {self.__model.get_inputs()[0].name: blob})[0]      
         
 
         boxes=[]
@@ -129,43 +121,30 @@ class Detection:
                         classes.append(int(np.argmax(output_arr[0,i, j, 0, 5:])))
                         centers.append([cx,cy,w,h])
                         
+
+        
         if len(boxes)<1:
             result['boxes']=boxes
             result['scores']=scores
             result['classes']=classes
             result['centers']=centers
             return result
-                    
-                        
-        #removing duplicate bounding boxes by confidence & intersection areas               
-        indices=tf.image.non_max_suppression(boxes,scores,
-                max_output_size=100,
-                iou_threshold=self.iou_threshold)
-                
-        indices=indices.numpy()
-                
-                
-        #gathering bounding boxes filtered by above NMS        
-        boxes=[boxes[i] for i in indices]
-        scores=[scores[i] for i in indices]
-        classes=[classes[i] for i in indices]
-        centers=[centers[i] for i in indices]
+
                 
                 
                 
-        for center,box,score,class_ in zip(centers,boxes,scores,classes):
+        for box,score,class_ in zip(boxes,scores,classes):
             text=self.labels[class_]
             xmin,ymin,xmax,ymax=box
-            cx,cy,w,h=center
+            
 
             cv2.rectangle(self.show_frame, (int(xmin),int(ymin)), (int(xmax),int(ymax)),self.__bbox_color, 2)
-            cv2.putText(self.show_frame, text, (int(cx) - 10, int(cy) - 10),cv2.FONT_HERSHEY_DUPLEX, 0.5, (0,0,0), 1)
         
 
         result['boxes']=np.array(boxes)
         result['scores']=np.array(scores)
         result['classes']=np.array(classes)
-        result['centers']=np.array(centers)
+
         return result
 
     
@@ -179,7 +158,7 @@ if __name__=="__main__":
 
     
     
-    client=Detection(model_path='models/anglebracket_detector.h5',
+    client=Detection(model_path='models/anglebracket_detector.onnx',
                                                 classes_path='classes/ab_classes.txt',
                                                 grid=(64,64))
     

@@ -1,5 +1,5 @@
 '''
-Copyright 2022 Vignesh(VK)Kotteeswaran <iamvk888@gmail.com>
+Copyright 2023 Vignesh(VK)Kotteeswaran <iamvk888@gmail.com>
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -16,6 +16,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 import cv2
 import detector_inference
+import ocr_inference
 import numpy as np
 from glob import glob
 from time import time
@@ -23,16 +24,19 @@ from utils import recover_mrz,mask,find_skew_angle,deskew,return_highest_ymax,re
 
 
 
-doc_client=detector_inference.Detection(model_path='models/document_detector.h5',
+doc_client=detector_inference.Detection(model_path='models/document_detector.onnx',
                                                 classes_path='classes/document_classes.txt',
                                                 grid=(16,16))
 
-anglebracket_client=detector_inference.Detection(model_path='models/anglebracket_detector.h5',
+anglebracket_client=detector_inference.Detection(model_path='models/anglebracket_detector.onnx',
                                                 classes_path='classes/ab_classes.txt',
                                                 grid=(64,64))
+
+ocr_client=ocr_inference.OCR(model_path='models/ocr.onnx')
+
 doc_client.plot_boxes=True
 
-files=sorted(glob('test/qc/*.*g'))
+files=sorted(glob('test/*.*g'))
 
 for file in files:
 
@@ -53,7 +57,7 @@ for file in files:
         #predict document RoI coordinates
         tic=time()
         doc_result=doc_client.detect(img)
-        print('Time taken for document detection:',time()-tic)
+        #print('Time taken for document detection:',time()-tic)
         doc_boxes=doc_result['boxes']
         doc_classes=doc_result['classes']
         #print(doc_result)
@@ -88,7 +92,7 @@ for file in files:
                     #predict "<" coordinates   
                     tic=time()
                     ab_result=anglebracket_client.detect(ab_roi)
-                    print('Time taken for < detection:',time()-tic)
+                    #print('Time taken for < detection:',time()-tic)
                     ab_boxes=ab_result['boxes']
 
 
@@ -128,8 +132,22 @@ for file in files:
                         else:
                             mrz_ymax=int(lowest_ymin+(5*height))
 
+                        final_height=mrz_ymax-mrz_ymin
+
+                        mrz_upper=mrz_img[mrz_ymin:mrz_ymin+final_height//2,mrz_xmin:mrz_xmax]
+                        mrz_lower=mrz_img[mrz_ymin+final_height//2:mrz_ymax,mrz_xmin:mrz_xmax]
+
+                        ocr_upper_mrz=ocr_client.predict([mrz_upper])
+                        ocr_lower_mrz=ocr_client.predict([mrz_lower])
+
+
                         #recover selected MRZ RoI
                         mrz_img[mrz_ymin:mrz_ymax,mrz_xmin:mrz_xmax]=recover_mrz(mrz_img[mrz_ymin:mrz_ymax,mrz_xmin:mrz_xmax])
+
+                        cv2.putText(mrz_img, ocr_upper_mrz,(mrz_xmin+10,mrz_ymin),cv2.FONT_HERSHEY_SIMPLEX,0.45,(0,0,255),1, cv2.LINE_AA)
+                        cv2.putText(mrz_img, ocr_lower_mrz,(mrz_xmin+10,mrz_ymax),cv2.FONT_HERSHEY_SIMPLEX,0.45,(0,0,255),1, cv2.LINE_AA)
+
+                       
 
 
                     for ab_box in ab_boxes:
