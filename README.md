@@ -11,7 +11,11 @@ python3 main.py
 ```
 #### MRZ EXTRACTION & OCR ####
 
+<p>
+
 ![alt text](https://github.com/vk1996/MRZ_Extract_And_Reader/blob/main/final_output.png?raw=true)
+
+</p>
 
 #### SOLUTION ####
 
@@ -26,5 +30,9 @@ is recovered by computing the distance & location of angled brackets & MRZ stand
 The recovered MRZ area is passed to OTSU thresholding & upper half / lower half of MRZ 
 is cropped & sent to Convolutional OCR model
 
+<p>
+
 
 ![alt text](https://github.com/vk1996/MRZ_Extract_And_Reader/blob/main/output.jpg?raw=true)
+
+</p>
