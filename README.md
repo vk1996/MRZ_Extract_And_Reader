@@ -11,11 +11,14 @@ python3 main.py
 ```
 #### MRZ EXTRACTION & OCR ####
 
+
+
 <p>
-
-![alt text](https://github.com/vk1996/MRZ_Extract_And_Reader/blob/main/final_output.png?raw=true)
-
+    <img src="https://github.com/vk1996/MRZ_Extract_And_Reader/blob/main/final_output.png" width="220" height="240" />
 </p>
+
+
+
 
 #### SOLUTION ####
 
