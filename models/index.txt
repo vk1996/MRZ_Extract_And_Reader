@@ -1,8 +1,0 @@
-ab_yolosmall_90mAP20.0.h5 
-2023-07-07 15:57:41,044 - INFO - Model inputs: ['input_2']
-2023-07-07 15:57:41,044 - INFO - Model outputs: ['reshape_19']
-
-doc_yolosmall_90mAP36.0.h5
-2023-07-07 15:59:31,002 - INFO - Model inputs: ['input_3']
-2023-07-07 15:59:31,002 - INFO - Model outputs: ['reshape_23']
-

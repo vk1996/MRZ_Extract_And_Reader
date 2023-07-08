@@ -18,6 +18,12 @@ python3 main.py
 </p>
 
 
+#### TECHNIQUES USED IN THE PROJECT ####
+
+1) Custom YOLOX Pytorch for OBJECT DETECTION for detecting documents & "<" .  
+2) Tensorflow CONVOLUTIONAL-RNN for OCR
+3) OTSU Thresholding to binarize & segment MRZ "<"
+4) Hough Lines to detect skew angle 
 
 
 #### SOLUTION ####
@@ -39,3 +45,19 @@ is cropped & sent to Convolutional OCR model
 </p>
 
 
+#### MODEL INFORMATION & LATENCY ####
+
+The Pytorch & Tensorflow models were converted to ONNX for better model loading time &
+cross-platform conversion
+
+Document Detector     - 1.6MB
+
+Anglebracket Detector - 2.5MB
+
+OCR model             - 9MB
+
+The entire process of 3 models has combined latency of less than 200ms/document on i7 CPU.
+
+The models can further be converted to formats like CoreML, TensorRT, OpenVINO etc based
+on deployment strategy. Also can be quantised to fp16 to reduce model size by half with
+negligible drop in accuracy.
