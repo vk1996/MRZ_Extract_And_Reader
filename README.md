@@ -14,7 +14,7 @@ python3 main.py
 
 
 <p>
-    <img src="https://github.com/vk1996/MRZ_Extract_And_Reader/blob/main/final_output.png" width="220" height="240" />
+    <img src="final_output.png" width="220" height="240" />
 </p>
 
 
@@ -35,7 +35,7 @@ is cropped & sent to Convolutional OCR model
 
 
 <p>
-    <img src="https://github.com/vk1996/MRZ_Extract_And_Reader/blob/main/output.jpg" width="220" height="240" />
+    <img src="output.jpg" width="220" height="240" />
 </p>
 
 
