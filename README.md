@@ -14,7 +14,7 @@ python3 main.py
 
 
 <p>
-    <img src="final_output.png" width="220" height="240" />
+    <img src="final_output.png"/>
 </p>
 
 
@@ -35,7 +35,7 @@ is cropped & sent to Convolutional OCR model
 
 
 <p>
-    <img src="output.jpg" width="220" height="240" />
+    <img src="output.jpg"/>
 </p>
 
 
