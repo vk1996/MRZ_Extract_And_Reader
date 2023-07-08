@@ -18,13 +18,19 @@ python3 main.py
 </p>
 
 
+<p>
+
 #### TECHNIQUES USED IN THE PROJECT ####
 
 1) Custom YOLOX Pytorch for OBJECT DETECTION for detecting documents & "<" .  
 2) Tensorflow CONVOLUTIONAL-RNN for OCR
 3) OTSU Thresholding to binarize & segment MRZ "<"
 4) Hough Lines to detect skew angle 
+</p>
 
+
+
+<p>
 
 #### SOLUTION ####
 
@@ -38,12 +44,14 @@ is recovered by computing the distance & location of angled brackets & MRZ stand
 
 The recovered MRZ area is passed to OTSU thresholding & upper half / lower half of MRZ 
 is cropped & sent to Convolutional OCR model
-
+</p>
 
 <p>
     <img src="output.jpg"/>
 </p>
 
+
+<p>
 
 #### MODEL INFORMATION & LATENCY ####
 
@@ -61,3 +69,5 @@ The entire process of 3 models has combined latency of less than 200ms/document 
 The models can further be converted to formats like CoreML, TensorRT, OpenVINO etc based
 on deployment strategy. Also can be quantised to fp16 to reduce model size by half with
 negligible drop in accuracy.
+
+</p>
