@@ -1,6 +1,7 @@
 ### MRZ READER ##
 
 This is a YOLO object detection inference repository to extract & read MRZ from passports. The training notebook is added in train dir but this repository focuses on inference. 
+
 I did this prototype as a part of assessment where the challenge was to recover MRZ are from passport
 by detecting angled brackets (<)
 
