@@ -1,7 +1,7 @@
 ### MRZ READER ##
 
-This is an inference private repository to extract & read MRZ from passports . I did this
-prototype as a part of assesment where the challenge was to recover MRZ are from passport
+This is a YOLO object detection inference repository to extract & read MRZ from passports. The training notebook is added in train dir but this repository focuses on inference. 
+I did this prototype as a part of assessment where the challenge was to recover MRZ are from passport
 by detecting angled brackets (<)
 
 ```
@@ -22,7 +22,7 @@ python3 main.py
 
 #### TECHNIQUES USED IN THE PROJECT ####
 
-1) Custom YOLOX Pytorch for OBJECT DETECTION for detecting documents & "<" .  
+1) Custom YOLO Tensorflow for OBJECT DETECTION for detecting documents & "<" .  
 2) Tensorflow CONVOLUTIONAL-RNN for OCR
 3) OTSU Thresholding to binarize & segment MRZ "<"
 4) Hough Lines to detect skew angle 
